@@ -1,0 +1,66 @@
+<html xmlns:th="http://www.thymeleaf.org"
+xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>User Administration</title>
+</head>
+<body>
+	<nav>
+
+	    <a th:href="@{/login}"
+	       sec:authorize="!isAuthenticated()">
+	        Login
+	    </a>
+
+	    <a th:href="@{/register}"
+	       sec:authorize="!isAuthenticated()">
+	        Register
+	    </a>
+
+	    <a th:href="@{/admin/users}"
+	       sec:authorize="hasRole('ADMIN')">
+	        User Admin
+	    </a>
+
+	    <form th:action="@{/logout}"
+	          method="post"
+	          sec:authorize="isAuthenticated()"
+	          style="display:inline;">
+	        <button type="submit">Logout</button>
+	    </form>
+
+	</nav>
+
+	<hr>
+    <h1>User Administration</h1>
+
+    <table border="1">
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Username</th>
+                <th>Role</th>
+                <th>Enabled</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+
+        <tbody>
+            <tr th:each="user : ${users}">
+                <td th:text="${user.id}">1</td>
+                <td th:text="${user.username}">username</td>
+                <td th:text="${user.role}">USER</td>
+                <td th:text="${user.enabled}">true</td>
+                <td>
+                    <a th:href="@{/admin/users/edit/{id}(id=${user.id})}">Edit</a>
+                    |
+                    <a th:href="@{/admin/users/delete/{id}(id=${user.id})}">Delete</a>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+
+</body>
+</html>

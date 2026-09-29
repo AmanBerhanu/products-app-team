@@ -25,9 +25,10 @@ public class SecurityConfig {
                 .anyRequest().permitAll()
             )
             .formLogin(form -> form
-                .loginPage("/login")
-                .permitAll()
-            )
+            	    .loginPage("/login")
+            	    .defaultSuccessUrl("/orders", true)
+            	    .permitAll()
+            	)
             .logout(logout -> logout
                 .logoutSuccessUrl("/login?logout")
                 .permitAll()

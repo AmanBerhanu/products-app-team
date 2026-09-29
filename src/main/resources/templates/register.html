@@ -1,0 +1,69 @@
+<html xmlns:th="http://www.thymeleaf.org"
+xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Register</title>
+</head>
+<body>
+	<nav>
+
+	    <a th:href="@{/login}"
+	       sec:authorize="!isAuthenticated()">
+	        Login
+	    </a>
+
+	    <a th:href="@{/register}"
+	       sec:authorize="!isAuthenticated()">
+	        Register
+	    </a>
+
+	    <a th:href="@{/admin/users}"
+	       sec:authorize="hasRole('ADMIN')">
+	        User Admin
+	    </a>
+
+	    <form th:action="@{/logout}"
+	          method="post"
+	          sec:authorize="isAuthenticated()"
+	          style="display:inline;">
+	        <button type="submit">Logout</button>
+	    </form>
+
+	</nav>
+
+	<hr>
+    <h1>Register</h1>
+
+    <div th:if="${error}">
+        <p th:text="${error}">Registration error</p>
+    </div>
+
+    <form th:action="@{/register}" method="post">
+
+        <div>
+            <label>Username:</label>
+            <input type="text" name="username" required>
+        </div>
+
+        <div>
+            <label>Password:</label>
+            <input type="password" name="password" required>
+        </div>
+
+        <div>
+            <label>Confirm Password:</label>
+            <input type="password" name="confirmPassword" required>
+        </div>
+
+        <button type="submit">Register</button>
+    </form>
+
+    <p>
+        Already have an account?
+        <a th:href="@{/login}">Login</a>
+    </p>
+
+</body>
+</html>
