@@ -1,3 +1,6 @@
+<html xmlns:th="http://www.thymeleaf.org"
+xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
@@ -5,7 +8,33 @@
     <title>Edit User</title>
 </head>
 <body>
+	<nav>
 
+	    <a th:href="@{/login}"
+	       sec:authorize="!isAuthenticated()">
+	        Login
+	    </a>
+
+	    <a th:href="@{/register}"
+	       sec:authorize="!isAuthenticated()">
+	        Register
+	    </a>
+
+	    <a th:href="@{/admin/users}"
+	       sec:authorize="hasRole('ADMIN')">
+	        User Admin
+	    </a>
+
+	    <form th:action="@{/logout}"
+	          method="post"
+	          sec:authorize="isAuthenticated()"
+	          style="display:inline;">
+	        <button type="submit">Logout</button>
+	    </form>
+
+	</nav>
+
+	<hr>
     <h1>Edit User</h1>
 
     <p>
